@@ -1,0 +1,49 @@
+Grocery Management System Functionality
+1. User Management
+- User Registration & Authentication (JWT-based auth)
+- Role-based access control (Admin, Regular User- customer)
+- User Profile Management
+- Multi-device session management
+2. Grocery Inventory Management
+- Add, update, and delete grocery items
+- Categorization (e.g., dairy, vegetables, fruits, grains)
+- Track quantity (weight, volume, or units)
+3. Shopping List Management
+- Manual list creation and management
+
+
+Project Scope & Requirements
+1. User Management
+- User Registration & Authentication (JWT-based auth)
+-> Users can sign up using an email, password, and optionally a phone number.
+-> Login requires email and password, with JWT-based authentication for secure session handling.
+-> Password hashing for security, and reset password functionality.
+- Role-based Access Control (Admin, Regular User)
+-> Admins can manage all users, groceries, and system settings.
+-> Regular Users can manage their shopping lists and groceries.
+-> Middleware will ensure only authorized users can perform certain actions. Intercepts Requests, Validates the JWT Token, Checks User Roles and Permissions.
+
+- User Profile Management
+-> Users can edit their profile (name, contact info, preferences).
+-> Users can change passwords and manage notifications.
+- Multi-device Session Management
+-> Users can log in from multiple devices, with session tracking.
+-> Option to view and revoke active sessions from the profile settings.
+
+2. Grocery Inventory Management
+- Add, Update, and Delete Grocery Items
+-> Users can add groceries with details like name, quantity, and category.
+-> Users can edit or delete existing items.
+- Categorization (e.g., dairy, vegetables, fruits, grains)
+-> Groceries are organized into categories for better management.
+-> Custom categories can be created if needed.
+- Track Quantity (Weight, Volume, or Units)
+-> Users can define quantities in different units (kg, liters, pieces).
+-> Quantity updates when items are added or removed from shopping lists.
+
+
+3. Shopping List Management
+- Manual List Creation and Management
+-> Users can create, update, and delete shopping lists manually.
+-> Items from the inventory can be added to a shopping list.
+-> Users can check off items as they are purchased.

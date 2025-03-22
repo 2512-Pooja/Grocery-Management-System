@@ -1,14 +1,20 @@
 package com.grocery.org.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.grocery.grpc.User;
 
 @Entity
 @Document(collection = "user")
 public class UserE {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String id;
     private String userId;
     private String firstName;
     private String lastName;
@@ -21,16 +27,21 @@ public class UserE {
     public UserE() {
     }
 
-    public UserE(String userId, String firstName, String lastName, String userName, String email, String password,
-            String phoneNo, String status) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userName = userName;
-        this.email = email;
-        this.password = password;
-        this.phoneNo = phoneNo;
-        this.status = status;
+    public UserE(User request) {
+        this.userId = request.getUserId();
+        this.firstName = request.getFirstName();
+        this.lastName = request.getLastName();
+        this.userName = request.getUserName();
+        this.email = request.getEmail();
+        this.password = request.getPassword();
+        this.phoneNo = request.getPhoneNo();
+        this.status = request.getStatus();
+    }
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
     }
     public String getUserId() {
         return userId;

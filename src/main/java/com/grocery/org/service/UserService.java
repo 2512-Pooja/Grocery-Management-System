@@ -2,9 +2,12 @@ package com.grocery.org.service;
 
 import net.devh.boot.grpc.server.service.GrpcService;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.grocery.grpc.User;
+import com.grocery.grpc.UserId;
 import com.grocery.grpc.UserResponse;
 import com.grocery.grpc.UserServiceGrpc;
 import com.grocery.org.entity.UserE;
@@ -18,22 +21,26 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
 
     @Override
     public void addUser(User request, StreamObserver<UserResponse> responseObserver) {
-        UserE user = new UserE();
-        System.out.println("User: method invoked ");;
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setUserName(request.getUserName());
-        user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
-        user.setPhoneNo(request.getPhoneNo());
-        user.setStatus(request.getStatus());
-        userRepository.save(user);
-        UserResponse response = UserResponse.newBuilder().setMessage("User ADDED: " + request.getUserName()).build();
+        UserE user = userRepository.save(new UserE(request));
+        UserResponse response = null;
+        if(user.getId() == null) {
+            response = UserResponse.newBuilder().setMessage("User NOT ADDED: " + user.getUserName()).build();
+        }else{
+            response = UserResponse.newBuilder().setMessage("User ADDED: " + user.getUserName()).setSuccess(true).build();
+        }
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
 
-    
+    @Override
+    public void deleteUser(UserId request, StreamObserver<UserResponse> responseObserver) {
+        String userName = userRepository.findById(request.getUserId()).get().getUserName();
+        userRepository.deleteById(request.getUserId());
+        UserResponse response = UserResponse.newBuilder()
+        .setMessage("User deleted : " + userName).setSuccess(true).build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
     
     
 

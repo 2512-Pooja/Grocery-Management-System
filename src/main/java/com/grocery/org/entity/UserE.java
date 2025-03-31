@@ -1,10 +1,11 @@
 package com.grocery.org.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.grocery.grpc.User;
@@ -23,6 +24,15 @@ public class UserE {
     private String password;
     private String phoneNo;
     private String status;
+    private List<String> orderIds; 
+
+    public List<String> getOrderId() {
+        return orderIds;
+    }
+
+    public void setOrderId(List<String> orderIds) {
+        this.orderIds = orderIds;
+    }
     
     public UserE() {
     }
@@ -36,6 +46,7 @@ public class UserE {
         this.password = request.getPassword();
         this.phoneNo = request.getPhoneNo();
         this.status = request.getStatus();
+        this.orderIds = request.getOrderIdsList();       
     }
     public String getId() {
         return id;
@@ -92,6 +103,12 @@ public class UserE {
         this.status = status;
     }
 
+    public List<String> getOrderIdsList() {
+        return orderIds;
+    }
 
+    public void setOrderIdsList(List<String> orderIds) {
+        this.orderIds = orderIds;
+    }
 
 }

@@ -1,0 +1,55 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";  
+option java_multiple_files = true;
+option java_package = "com.grocery.grpc";
+
+service UserService {
+  rpc AddUser (User) returns (UserResponse);
+  rpc DeleteUser (UserId) returns (UserResponse);
+  rpc UpdateUser (User) returns (UserResponse);
+  rpc GetUser (UserId) returns (User);
+  rpc GetOrdersByUserId (UserId) returns (OrderList);
+}
+
+message User {
+  string userId = 1;
+  string userName = 2;
+  string firstName = 3;
+  string lastName = 4;
+  string email = 5;
+  string phoneNo = 6;
+  string password = 7;
+  string status = 8;
+  repeated string orderIds = 9;
+}
+
+message UserId {
+  string userId = 1;
+}
+
+message UserResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message Order {
+    string orderId = 1;
+    string orderStatus = 2;
+    double totalPrice = 3;
+    google.protobuf.Timestamp orderDate = 4;
+    string userId = 5;
+}
+
+message OrderList {
+    repeated Order orders = 1;
+}
+
+service OrderService {
+    rpc AddOrder (Order) returns (OrderResponse);
+}
+
+message OrderResponse {
+  bool success = 1;
+  string message = 2;
+}
+
